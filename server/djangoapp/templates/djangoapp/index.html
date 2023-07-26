@@ -14,38 +14,44 @@
 </head>
 
     <body>
-        
-     This is the index page of your Django app!
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-            <a href="https://vincentschac-8000.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/about">
-                <button>About</button>
-            </a>
-            <a href="https://vincentschac-8000.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/contact">
-                <button>Contact Us</button>
-            </a>
-
-            <ul class="nav navbar-nav navbar-right">
+    <!-- Remove this line the first time you edit this file -->
+    <!--Add a nav bar here -->
+    <nav class="navbar navbar-light bg-light navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul style="justify-content:left;" class="navbar-nav">
+                    <li class="navbar-brand">
+                        <a class="nav-link" href="{% url 'djangoapp:about' %}">
+                            <button>About Us</button>
+                        </a>
+                    </li>
+                    <li class="navbar-brand">
+                        <a class="nav-link" href="{% url 'djangoapp:contact' %}">
+                            <button>Contact Us</button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li>
-                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                    <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
                     <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                 </li>
                 {% else %}
-                <li>
-                    <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Username" name="username" >
-                            <input type="password" class="form-control" placeholder="Password" name="psw" >
-                            <button class="btn btn-primary" type="submit">Login</button>
-                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
-                        </div>
-                    </form>
-                </li>
+                <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Username" name="username" >
+                        <input type="password" class="form-control" placeholder="Password" name="psw" >
+                        <button class="btn btn-primary" type="submit">Login</button>
+                        <a class="nav-link" style="font-size:15px" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                    </div>
+                </form>
                 {% endif %}
-            </ul>
+            </div>
         </div>
+    </nav>
     <!--Add a dealer table here -->
     <table class="table" id="table" data-filter-control="true">
         <thead>
@@ -59,7 +65,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for dealer in dealerships %}
+            {% for dealer in  dealership_list %}
                 <tr>
                     <td>{{ dealer.id }}</td>
                     <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{ dealer.full_name }}</a></td>
@@ -71,12 +77,10 @@
             {% endfor %}
         </tbody>
     </table>
-        </nav>
     </body>
     <script>
         $(function() {
-            $('#table').bootstrapTable()
+          $('#table').bootstrapTable()
         })
-    </script>
-
+      </script>
 </html>
